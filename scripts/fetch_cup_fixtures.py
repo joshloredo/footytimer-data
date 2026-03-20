@@ -6,12 +6,15 @@ from SofaScore, map to football-data.org IDs, and output as static JSON.
 Output: docs/supplemental-fixtures.json (served by GitHub Pages)
 """
 
+from __future__ import annotations
+
 import hashlib
 import json
 import os
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
+from typing import Dict, List, Optional
 from urllib.request import Request, urlopen
 from urllib.error import URLError
 
@@ -22,7 +25,7 @@ TEAM_MAPPING_FILE = SCRIPT_DIR / "team_mapping.json"
 
 # SofaScore tournament IDs
 TOURNAMENTS = {
-    29: {"fd_id": 2055, "name": "FA Cup", "code": "FAC"},
+    19: {"fd_id": 2055, "name": "FA Cup", "code": "FAC"},
     21: {"fd_id": 2139, "name": "EFL Cup", "code": "ELC"},
 }
 
@@ -63,13 +66,7 @@ def get_current_season_id(tournament_id: int) -> int | None:
     data = fetch_json(url)
     if not data or "seasons" not in data:
         return None
-    # Seasons are ordered most recent first
-    for season in data["seasons"]:
-        if "24/25" in season.get("name", "") or "2024/2025" in season.get("name", ""):
-            return season["id"]
-        if "2025" in season.get("year", ""):
-            return season["id"]
-    # Fallback: first (most recent) season
+    # Seasons are ordered most recent first — just use the latest
     return data["seasons"][0]["id"] if data["seasons"] else None
 
 

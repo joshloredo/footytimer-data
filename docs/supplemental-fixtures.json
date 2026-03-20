@@ -1,5 +1,141 @@
 {
   "version": 1,
-  "updatedAt": "2026-03-20T00:00:00Z",
-  "matches": []
+  "updatedAt": "2026-03-20T23:02:07Z",
+  "matches": [
+    {
+      "id": 982206,
+      "homeTeam": {
+        "id": 57,
+        "name": "Arsenal FC",
+        "shortName": "Arsenal",
+        "tla": "ARS",
+        "crest": "https://crests.football-data.org/57.png"
+      },
+      "awayTeam": {
+        "id": 65,
+        "name": "Manchester City FC",
+        "shortName": "Man City",
+        "tla": "MCI",
+        "crest": "https://crests.football-data.org/65.png"
+      },
+      "utcDate": "2026-03-22T16:30:00Z",
+      "status": "SCHEDULED",
+      "competition": {
+        "id": 2139,
+        "name": "EFL Cup",
+        "code": "ELC",
+        "emblem": null
+      },
+      "matchday": 29,
+      "venue": null
+    },
+    {
+      "id": 981067,
+      "homeTeam": {
+        "id": 65,
+        "name": "Manchester City FC",
+        "shortName": "Man City",
+        "tla": "MCI",
+        "crest": "https://crests.football-data.org/65.png"
+      },
+      "awayTeam": {
+        "id": 64,
+        "name": "Liverpool FC",
+        "shortName": "Liverpool",
+        "tla": "LIV",
+        "crest": "https://crests.football-data.org/64.png"
+      },
+      "utcDate": "2026-04-04T11:45:00Z",
+      "status": "SCHEDULED",
+      "competition": {
+        "id": 2055,
+        "name": "FA Cup",
+        "code": "FAC",
+        "emblem": null
+      },
+      "matchday": 27,
+      "venue": null
+    },
+    {
+      "id": 925054,
+      "homeTeam": {
+        "id": 61,
+        "name": "Chelsea FC",
+        "shortName": "Chelsea",
+        "tla": "CHE",
+        "crest": "https://crests.football-data.org/61.png"
+      },
+      "awayTeam": {
+        "id": 55,
+        "name": "Port Vale",
+        "shortName": "Port Vale",
+        "tla": "PVA",
+        "crest": "https://api.sofascore.app/api/v1/team/55/image"
+      },
+      "utcDate": "2026-04-04T16:15:00Z",
+      "status": "SCHEDULED",
+      "competition": {
+        "id": 2055,
+        "name": "FA Cup",
+        "code": "FAC",
+        "emblem": null
+      },
+      "matchday": 27,
+      "venue": null
+    },
+    {
+      "id": 952300,
+      "homeTeam": {
+        "id": 340,
+        "name": "Southampton FC",
+        "shortName": "Southampton",
+        "tla": "SOU",
+        "crest": "https://crests.football-data.org/340.png"
+      },
+      "awayTeam": {
+        "id": 57,
+        "name": "Arsenal FC",
+        "shortName": "Arsenal",
+        "tla": "ARS",
+        "crest": "https://crests.football-data.org/57.png"
+      },
+      "utcDate": "2026-04-04T19:00:00Z",
+      "status": "SCHEDULED",
+      "competition": {
+        "id": 2055,
+        "name": "FA Cup",
+        "code": "FAC",
+        "emblem": null
+      },
+      "matchday": 27,
+      "venue": null
+    },
+    {
+      "id": 923272,
+      "homeTeam": {
+        "id": 563,
+        "name": "West Ham United FC",
+        "shortName": "West Ham",
+        "tla": "WHU",
+        "crest": "https://crests.football-data.org/563.png"
+      },
+      "awayTeam": {
+        "id": 341,
+        "name": "Leeds United FC",
+        "shortName": "Leeds",
+        "tla": "LEE",
+        "crest": "https://crests.football-data.org/341.png"
+      },
+      "utcDate": "2026-04-05T15:30:00Z",
+      "status": "SCHEDULED",
+      "competition": {
+        "id": 2055,
+        "name": "FA Cup",
+        "code": "FAC",
+        "emblem": null
+      },
+      "matchday": 27,
+      "venue": null
+    }
+  ]
 }

@@ -167,5 +167,67 @@ class ReportTests(unittest.TestCase):
                              "⚽ FootyTimer ❌ football-data failed (HTTPError: HTTP Error 503), kept last good feed (1 day old)")
 
 
+class ScheduleGuardTests(unittest.TestCase):
+    def ran_at(self, root, when):
+        (root / "state").mkdir(exist_ok=True)
+        (root / "state" / "last-success").write_text(when + "\n", encoding="utf-8")
+
+    def test_reboot_after_tonights_run_is_skipped(self):
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            self.ran_at(root, "2026-10-01T07:06:00Z")                             # 03:06 EDT
+            self.assertTrue(bf.already_ran(root, utc("2026-10-01T18:00:00Z")))   # 14:00 EDT reboot
+
+    def test_next_scheduled_run_is_not_skipped(self):
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            self.ran_at(root, "2026-10-01T07:06:00Z")
+            self.assertFalse(bf.already_ran(root, utc("2026-10-02T07:05:00Z")))  # next night 03:05 EDT
+
+    def test_boundary_across_dst_fall_back(self):
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            self.ran_at(root, "2026-10-31T07:06:00Z")                             # Sat 03:06 EDT
+            self.assertTrue(bf.already_ran(root, utc("2026-11-01T07:30:00Z")))   # 02:30 EST, before 03:05
+            self.assertFalse(bf.already_ran(root, utc("2026-11-01T08:05:00Z")))  # 03:05 EST
+
+    def test_lock_blocks_a_second_run_and_expires(self):
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            (root / "state").mkdir()
+            self.assertTrue(bf.take_lock(root))
+            self.assertFalse(bf.take_lock(root))
+            old = time.time() - 3 * 3600
+            os.utime(root / "state" / "lock", (old, old))
+            self.assertTrue(bf.take_lock(root))
+
+
+class DryRunTests(unittest.TestCase):
+    def test_dry_run_builds_feed_without_writing(self):
+        responses = {
+            "competitions/PL/matches": load("fd_pl.json"),
+            "competitions/CL/matches": {"matches": []},
+            "eng.1/scoreboard?dates=20260919": load("espn_eng1_20260919.json"),
+            "eng.1/scoreboard?dates=20260920": load("espn_eng1_20260920.json"),
+        }
+
+        def fake_fetch(url, headers):
+            for key, payload in responses.items():
+                if key in url:
+                    return payload
+            return {"events": []}
+
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            (root / "docs").mkdir()
+            (root / ".env").write_text("FOOTBALL_DATA_API_KEY=test\n", encoding="utf-8")
+            code = bf.main(["--dry-run"], root=root, fetch=fake_fetch,
+                           now=utc("2026-09-18T07:05:00Z"), sleep=lambda seconds: None)
+            self.assertEqual(code, 0)
+            self.assertFalse((root / "docs" / "broadcasts.json").exists())
+            self.assertFalse((root / "state" / "status.line").exists())
+            self.assertFalse((root / "state" / "lock").exists())
+
+
 if __name__ == "__main__":
     unittest.main()

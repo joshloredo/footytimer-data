@@ -228,3 +228,163 @@ def fail(root: Path, dry_run: bool, reason: str, previous: Optional[dict], now: 
         (root / "state" / "status.line").write_text(line + "\n", encoding="utf-8")
     print(f"{now:%Y-%m-%d %H:%M:%S}Z {line}")
     return 1
+
+# ---------- I/O ----------
+
+def http_json(url: str, headers: Dict[str, str]) -> dict:
+    request = urllib.request.Request(url, headers={"User-Agent": USER_AGENT, "Accept-Encoding": "identity", **headers})
+    with urllib.request.urlopen(request, timeout=20) as response:
+        return json.load(response)
+
+
+def with_retries(call: Callable[[], dict], delays, sleep) -> dict:
+    for delay in delays:
+        try:
+            return call()
+        except Exception:
+            sleep(delay)
+    return call()
+
+
+def fd_url(code: str, now: datetime) -> str:
+    return (f"https://api.football-data.org/v4/competitions/{code}/matches"
+            f"?dateFrom={now:%Y-%m-%d}&dateTo={now + FD_WINDOW:%Y-%m-%d}")
+
+
+def espn_url(comp: str, day: str) -> str:
+    return f"https://site.api.espn.com/apis/site/v2/sports/soccer/{COMPETITIONS[comp]}/scoreboard?dates={day}"
+
+
+def read_json(path: Path) -> Optional[dict]:
+    try:
+        return json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return None
+
+
+def write_json_atomic(path: Path, data: dict) -> None:
+    tmp = path.with_suffix(path.suffix + ".tmp")
+    tmp.write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    tmp.replace(path)
+
+
+def read_env(path: Path) -> Dict[str, str]:
+    pairs = (line.split("=", 1) for line in path.read_text(encoding="utf-8").splitlines()
+             if "=" in line and not line.lstrip().startswith("#"))
+    return {key.strip(): value.strip() for key, value in pairs}
+
+
+def trim_log(path: Path) -> None:
+    try:
+        if path.stat().st_size > LOG_MAX_BYTES:
+            path.write_bytes(path.read_bytes()[-LOG_MAX_BYTES:])
+    except OSError:
+        pass
+
+
+def last_scheduled_run(now: datetime) -> datetime:
+    """The most recent 03:05 America/New_York at or before now, in UTC."""
+    local = now.astimezone(ET)
+    boundary = local.replace(hour=3, minute=5, second=0, microsecond=0)
+    if boundary > local:
+        boundary -= timedelta(days=1)
+    return boundary.astimezone(timezone.utc)
+
+
+def already_ran(root: Path, now: datetime) -> bool:
+    """True if a run already succeeded since the last 03:05 ET, so a reboot's catch-up is skipped."""
+    try:
+        last = parse_utc((root / "state" / "last-success").read_text(encoding="utf-8").strip())
+    except (OSError, ValueError):
+        return False
+    return last >= last_scheduled_run(now)
+
+
+def take_lock(root: Path) -> bool:
+    lock = root / "state" / "lock"
+    try:
+        lock.mkdir()
+        return True
+    except FileExistsError:
+        if time.time() - lock.stat().st_mtime < STALE_LOCK.total_seconds():
+            return False
+        lock.rmdir()  # left behind by a crashed run
+        lock.mkdir()
+        return True
+
+
+def publish(root: Path, now: datetime) -> None:
+    git = ["git", "-C", str(root)]
+    subprocess.run(git + ["add", "docs/broadcasts.json"], check=True, capture_output=True)
+    subprocess.run(git + ["commit", "-q", "-m", f"feed: {now.astimezone(ET):%Y-%m-%d}"], check=True, capture_output=True)
+    subprocess.run(git + ["push", "-q", "origin", "HEAD:main"], check=True, capture_output=True)
+
+
+def run(root: Path, dry_run: bool, fetch: Fetch, now: datetime, sleep) -> int:
+    feed_path = root / "docs" / "broadcasts.json"
+    previous = read_json(feed_path)
+    try:
+        key = read_env(root / ".env")["FOOTBALL_DATA_API_KEY"]
+        fixtures: List[dict] = []
+        for code in COMPETITIONS:
+            payload = with_retries(lambda: fetch(fd_url(code, now), {"X-Auth-Token": key}), FD_RETRY_DELAYS, sleep)
+            fixtures += parse_fd(payload, code)
+    except Exception as exc:  # network, HTTP, missing .env/key
+        return fail(root, dry_run, f"football-data failed ({type(exc).__name__}: {exc})", previous, now)
+
+    window = [f for f in fixtures if now - timedelta(hours=3) <= f["utc"] <= now + ESPN_WINDOW]
+    espn: Dict[Tuple[str, str], Optional[List[dict]]] = {}
+    for comp, day in sorted({(f["comp"], f["utc"].strftime("%Y%m%d")) for f in window}):
+        try:
+            espn[(comp, day)] = parse_espn(with_retries(lambda: fetch(espn_url(comp, day), {}), ESPN_RETRY_DELAYS, sleep))
+        except Exception:
+            espn[(comp, day)] = None
+        sleep(1)
+
+    feed, stats = build_feed(fixtures, espn, previous, now)
+    try:
+        validate(feed, stats, dates_queried=len(espn), fixtures_in_window=len(window))
+    except FeedError as exc:
+        return fail(root, dry_run, str(exc), previous, now)
+
+    current = snapshot(fixtures)
+    changes = diff_fixtures(read_json(root / "state" / "fixtures-last.json") or {}, current, now)
+    line = status_line(feed, stats, len(window), changes)
+    if dry_run:
+        print(json.dumps(feed, indent=2, ensure_ascii=False))
+        print(line)
+        return 0
+
+    write_json_atomic(feed_path, feed)
+    try:
+        publish(root, now)
+    except subprocess.CalledProcessError as exc:
+        return fail(root, False, f"push failed (git exit {exc.returncode})", previous, now)
+    write_json_atomic(root / "state" / "fixtures-last.json", current)
+    (root / "state" / "last-success").write_text(now.strftime("%Y-%m-%dT%H:%M:%SZ") + "\n", encoding="utf-8")
+    (root / "state" / "status.line").write_text(line + "\n", encoding="utf-8")
+    print(f"{now:%Y-%m-%d %H:%M:%S}Z {line}")
+    return 0
+
+
+def main(argv: List[str], root: Path = Path(__file__).resolve().parent.parent, fetch: Fetch = http_json,
+         now: Optional[datetime] = None, sleep=time.sleep) -> int:
+    dry_run = "--dry-run" in argv
+    now = now or datetime.now(timezone.utc)
+    (root / "state").mkdir(exist_ok=True)
+    (root / "logs").mkdir(exist_ok=True)
+    trim_log(root / "logs" / "feed.log")
+    if not dry_run and already_ran(root, now):
+        print(f"{now:%Y-%m-%d %H:%M:%S}Z skip: already published since the last 03:05 ET run")
+        return 0
+    if not take_lock(root):
+        print(f"{now:%Y-%m-%d %H:%M:%S}Z skip: another run holds the lock")
+        return 0
+    try:
+        return run(root, dry_run, fetch, now, sleep)
+    finally:
+        (root / "state" / "lock").rmdir()
+
+
+if __name__ == "__main__":
+    sys.exit(main(sys.argv[1:]))

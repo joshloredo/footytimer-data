@@ -125,5 +125,47 @@ class FeedTests(unittest.TestCase):
             bf.validate(feed, {"failed_dates": [], "events": 1}, dates_queried=1, fixtures_in_window=1)
 
 
+class ReportTests(unittest.TestCase):
+    NOW = utc("2026-10-01T07:05:00Z")
+
+    def snap(self, **changes):
+        base = {"utc": "2026-10-10T11:30:00Z", "status": "TIMED", "label": "ARS v LEE"}
+        base.update(changes)
+        return base
+
+    def test_first_night_is_silent(self):
+        self.assertEqual(bf.diff_fixtures({}, {"1": self.snap()}, self.NOW), [])
+
+    def test_moved_new_postponed_and_removed(self):
+        previous = {"1": self.snap(), "2": self.snap(label="CHE v BOU", utc="2026-10-10T14:00:00Z"),
+                    "3": self.snap(label="SUN v BHA", utc="2026-10-10T14:00:00Z")}
+        current = {"1": self.snap(utc="2026-10-11T15:30:00Z"),
+                   "2": self.snap(label="CHE v BOU", utc="2026-10-10T14:00:00Z", status="POSTPONED"),
+                   "4": self.snap(label="LIV v MCI", utc="2026-10-11T15:30:00Z")}
+        self.assertEqual(bf.diff_fixtures(previous, current, self.NOW),
+                         ["CHE v BOU postponed", "ARS v LEE → Sun 11:30", "new: LIV v MCI Sun 11:30", "removed: SUN v BHA"])
+
+    def test_status_line_ok(self):
+        feed = {"matches": {str(i): {} for i in range(21)}}
+        stats = {"failed_dates": [], "unmatched": [], "unknown": []}
+        self.assertEqual(bf.status_line(feed, stats, 38, ["ARS v LEE → Sun 11:30", "new: LIV v MCI Sun 11:30"]),
+                         "⚽ FootyTimer ✓ 38 fixtures · 21 on TV · 17 TBD · 2 changed: ARS v LEE → Sun 11:30; new: LIV v MCI Sun 11:30")
+
+    def test_status_line_partial_with_flags(self):
+        feed = {"matches": {str(i): {} for i in range(19)}}
+        stats = {"failed_dates": ["PL 20261010", "PL 20261011"], "unmatched": ["BOU @ CHE"], "unknown": ["Kanal 7"]}
+        self.assertEqual(bf.status_line(feed, stats, 38, []),
+                         "⚽ FootyTimer ⚠️ ESPN failed for 2 dates (kept last known) · 38 fixtures · 19 on TV · 1 unmatched · new channel: Kanal 7")
+
+    def test_failure_line_reports_feed_age(self):
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            (root / "state").mkdir()
+            self.assertEqual(bf.fail(root, False, "football-data failed (HTTPError: HTTP Error 503)",
+                                     {"generatedAt": "2026-09-30T07:05:00Z"}, self.NOW), 1)
+            self.assertEqual((root / "state" / "status.line").read_text(encoding="utf-8").strip(),
+                             "⚽ FootyTimer ❌ football-data failed (HTTPError: HTTP Error 503), kept last good feed (1 day old)")
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -165,3 +165,66 @@ def validate(feed: dict, stats: dict, dates_queried: int, fixtures_in_window: in
         raise FeedError("ESPN failed for every date")
     if fixtures_in_window and dates_queried and stats["events"] == 0:
         raise FeedError("ESPN returned no events for dates with fixtures")
+
+
+# ---------- reporting ----------
+
+def snapshot(fixtures: List[dict]) -> Dict[str, dict]:
+    return {str(f["id"]): {"utc": f["utc"].strftime("%Y-%m-%dT%H:%M:%SZ"), "status": f["status"], "label": f["label"]}
+            for f in fixtures}
+
+
+def fmt_et(when: datetime) -> str:
+    return when.astimezone(ET).strftime("%a %H:%M")
+
+
+def diff_fixtures(previous: Dict[str, dict], current: Dict[str, dict], now: datetime) -> List[str]:
+    """Changes in the next 21 days since last night; silent on the first night."""
+    if not previous:
+        return []
+    horizon = now + ESPN_WINDOW
+    changes: List[str] = []
+    for fid, cur in sorted(current.items(), key=lambda kv: kv[1]["utc"]):
+        when = parse_utc(cur["utc"])
+        if not now <= when <= horizon:
+            continue
+        old = previous.get(fid)
+        if old is None:
+            changes.append(f"new: {cur['label']} {fmt_et(when)}")
+        elif old["utc"] != cur["utc"]:
+            changes.append(f"{cur['label']} → {fmt_et(when)}")
+        elif old["status"] != cur["status"] and cur["status"] in {"POSTPONED", "CANCELLED", "SUSPENDED"}:
+            changes.append(f"{cur['label']} {cur['status'].lower()}")
+    for fid, old in sorted(previous.items(), key=lambda kv: kv[1]["utc"]):
+        if fid not in current and now <= parse_utc(old["utc"]) <= horizon:
+            changes.append(f"removed: {old['label']}")
+    return changes
+
+
+def status_line(feed: dict, stats: dict, fixtures_in_window: int, changes: List[str]) -> str:
+    on_tv = len(feed["matches"])
+    if stats["failed_dates"]:
+        count = len(stats["failed_dates"])
+        line = (f"⚽ FootyTimer ⚠️ ESPN failed for {count} date{'s' if count != 1 else ''} (kept last known)"
+                f" · {fixtures_in_window} fixtures · {on_tv} on TV")
+    else:
+        line = f"⚽ FootyTimer ✓ {fixtures_in_window} fixtures · {on_tv} on TV · {max(fixtures_in_window - on_tv, 0)} TBD"
+    if changes:
+        line += f" · {len(changes)} changed: " + "; ".join(changes[:3])
+    if stats["unmatched"]:
+        line += f" · {len(stats['unmatched'])} unmatched"
+    if stats["unknown"]:
+        line += " · new channel: " + ", ".join(stats["unknown"])
+    return line
+
+
+def fail(root: Path, dry_run: bool, reason: str, previous: Optional[dict], now: datetime) -> int:
+    age = "none published yet"
+    if previous and previous.get("generatedAt"):
+        days = (now - parse_utc(previous["generatedAt"])).days
+        age = f"{days} day{'s' if days != 1 else ''} old"
+    line = f"⚽ FootyTimer ❌ {reason}, kept last good feed ({age})"
+    if not dry_run:
+        (root / "state" / "status.line").write_text(line + "\n", encoding="utf-8")
+    print(f"{now:%Y-%m-%d %H:%M:%S}Z {line}")
+    return 1

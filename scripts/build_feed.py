@@ -118,3 +118,50 @@ def display_channels(raw: List[str]) -> Tuple[List[str], List[str]]:
             if label not in KNOWN_CHANNELS:
                 unknown.append(label)
     return shown[:3], unknown
+
+
+# ---------- building and validating the feed (pure) ----------
+
+def build_feed(fixtures: List[dict], espn: Dict[Tuple[str, str], Optional[List[dict]]],
+               previous: Optional[dict], now: datetime) -> Tuple[dict, dict]:
+    """espn maps (competition, YYYYMMDD) -> parsed events, or None when that date's request failed."""
+    prev_matches = (previous or {}).get("matches", {})
+    entries: Dict[str, dict] = {}
+    stats: dict = {"unmatched": [], "unknown": [], "failed_dates": [], "events": 0}
+    for (comp, day), events in sorted(espn.items()):
+        day_fixtures = [f for f in fixtures if f["comp"] == comp and f["utc"].strftime("%Y%m%d") == day]
+        if events is None:
+            stats["failed_dates"].append(f"{comp} {day}")
+            for f in day_fixtures:  # keep last night's listing for this date
+                if str(f["id"]) in prev_matches:
+                    entries[str(f["id"])] = prev_matches[str(f["id"])]
+            continue
+        stats["events"] += len(events)
+        matched, unmatched = match_events(day_fixtures, events)
+        stats["unmatched"] += unmatched
+        for fid, raw in matched.items():
+            channels, unknown = display_channels(raw)
+            stats["unknown"] += [u for u in unknown if u not in stats["unknown"]]
+            if channels:
+                entries[str(fid)] = {"channels": channels, "source": "espn"}
+    feed = {
+        "version": 1,
+        "region": "US",
+        "generatedAt": now.astimezone(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "matches": dict(sorted(entries.items(), key=lambda kv: int(kv[0]))),
+    }
+    return feed, stats
+
+
+def validate(feed: dict, stats: dict, dates_queried: int, fixtures_in_window: int) -> None:
+    if feed.get("version") != 1 or feed.get("region") != "US":
+        raise FeedError("bad feed header")
+    for mid, entry in feed.get("matches", {}).items():
+        channels = entry.get("channels")
+        if (not mid.isdigit() or not isinstance(channels, list) or not 1 <= len(channels) <= 3
+                or not all(isinstance(c, str) and c for c in channels)):
+            raise FeedError(f"bad entry for match {mid}")
+    if dates_queried and len(stats["failed_dates"]) == dates_queried:
+        raise FeedError("ESPN failed for every date")
+    if fixtures_in_window and dates_queried and stats["events"] == 0:
+        raise FeedError("ESPN returned no events for dates with fixtures")

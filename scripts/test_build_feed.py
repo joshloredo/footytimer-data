@@ -74,5 +74,56 @@ class MatchingTests(unittest.TestCase):
         self.assertEqual(bf.match_events([a, b], [event]), ({2: ["USA Net"]}, []))
 
 
+class FeedTests(unittest.TestCase):
+    NOW = utc("2026-09-18T07:05:00Z")
+
+    def espn_day(self, name):
+        return bf.parse_espn(load(name))
+
+    def test_build_feed_from_real_days(self):
+        espn = {("PL", "20260919"): self.espn_day("espn_eng1_20260919.json"),
+                ("PL", "20260920"): self.espn_day("espn_eng1_20260920.json")}
+        feed, stats = bf.build_feed(PL, espn, None, self.NOW)
+        self.assertEqual(feed["matches"][str(fixture_id(PL, "TOT v AVL", "20260919"))],
+                         {"channels": ["USA Network", "Universo"], "source": "espn"})
+        self.assertEqual((feed["version"], feed["region"], feed["generatedAt"]), (1, "US", "2026-09-18T07:05:00Z"))
+        self.assertEqual(stats["failed_dates"], [])
+        bf.validate(feed, stats, dates_queried=2, fixtures_in_window=9)
+
+    def test_failed_date_keeps_last_nights_listing(self):
+        tot = str(fixture_id(PL, "TOT v AVL", "20260919"))
+        previous = {"version": 1, "region": "US", "generatedAt": "2026-09-17T07:05:00Z",
+                    "matches": {tot: {"channels": ["USA Network"], "source": "espn"}}}
+        espn = {("PL", "20260919"): None, ("PL", "20260920"): self.espn_day("espn_eng1_20260920.json")}
+        feed, stats = bf.build_feed(PL, espn, previous, self.NOW)
+        self.assertEqual(feed["matches"][tot], {"channels": ["USA Network"], "source": "espn"})
+        self.assertEqual(stats["failed_dates"], ["PL 20260919"])
+
+    def test_every_date_failing_blocks_publish(self):
+        feed, stats = bf.build_feed(PL, {("PL", "20260919"): None}, None, self.NOW)
+        with self.assertRaises(bf.FeedError):
+            bf.validate(feed, stats, dates_queried=1, fixtures_in_window=5)
+
+    def test_espn_returning_no_events_blocks_publish(self):
+        feed, stats = bf.build_feed(PL, {("PL", "20260919"): []}, None, self.NOW)
+        with self.assertRaises(bf.FeedError):
+            bf.validate(feed, stats, dates_queried=1, fixtures_in_window=5)
+
+    def test_offseason_publishes_an_empty_feed(self):
+        feed, stats = bf.build_feed([], {}, {"matches": {"1": {"channels": ["NBC"], "source": "espn"}}}, self.NOW)
+        bf.validate(feed, stats, dates_queried=0, fixtures_in_window=0)
+        self.assertEqual(feed["matches"], {})
+
+    def test_unassigned_window_publishes_without_listings(self):
+        feed, stats = bf.build_feed(PL, {("PL", "20261010"): self.espn_day("espn_eng1_20261010.json")}, None, self.NOW)
+        bf.validate(feed, stats, dates_queried=1, fixtures_in_window=6)
+        self.assertEqual(feed["matches"], {})
+
+    def test_malformed_entry_is_rejected(self):
+        feed = {"version": 1, "region": "US", "generatedAt": "2026-09-18T07:05:00Z", "matches": {"12": {"channels": []}}}
+        with self.assertRaises(bf.FeedError):
+            bf.validate(feed, {"failed_dates": [], "events": 1}, dates_queried=1, fixtures_in_window=1)
+
+
 if __name__ == "__main__":
     unittest.main()

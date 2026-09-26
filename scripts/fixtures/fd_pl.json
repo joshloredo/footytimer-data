@@ -1,0 +1,304 @@
+{
+ "matches": [
+  {
+   "id": 560591,
+   "utcDate": "2026-09-18T19:00:00Z",
+   "status": "FINISHED",
+   "homeTeam": {
+    "name": "Brentford FC",
+    "shortName": "Brentford",
+    "tla": "BRE"
+   },
+   "awayTeam": {
+    "name": "Chelsea FC",
+    "shortName": "Chelsea",
+    "tla": "CHE"
+   }
+  },
+  {
+   "id": 560587,
+   "utcDate": "2026-09-19T11:30:00Z",
+   "status": "FINISHED",
+   "homeTeam": {
+    "name": "Tottenham Hotspur FC",
+    "shortName": "Tottenham",
+    "tla": "TOT"
+   },
+   "awayTeam": {
+    "name": "Aston Villa FC",
+    "shortName": "Aston Villa",
+    "tla": "AVL"
+   }
+  },
+  {
+   "id": 560584,
+   "utcDate": "2026-09-19T14:00:00Z",
+   "status": "FINISHED",
+   "homeTeam": {
+    "name": "Everton FC",
+    "shortName": "Everton",
+    "tla": "EVE"
+   },
+   "awayTeam": {
+    "name": "Ipswich Town FC",
+    "shortName": "Ipswich Town",
+    "tla": "IPS"
+   }
+  },
+  {
+   "id": 560586,
+   "utcDate": "2026-09-19T14:00:00Z",
+   "status": "FINISHED",
+   "homeTeam": {
+    "name": "Brighton & Hove Albion FC",
+    "shortName": "Brighton Hove",
+    "tla": "BHA"
+   },
+   "awayTeam": {
+    "name": "Arsenal FC",
+    "shortName": "Arsenal",
+    "tla": "ARS"
+   }
+  },
+  {
+   "id": 560588,
+   "utcDate": "2026-09-19T14:00:00Z",
+   "status": "FINISHED",
+   "homeTeam": {
+    "name": "Newcastle United FC",
+    "shortName": "Newcastle",
+    "tla": "NEW"
+   },
+   "awayTeam": {
+    "name": "Hull City AFC",
+    "shortName": "Hull City",
+    "tla": "HUL"
+   }
+  },
+  {
+   "id": 560589,
+   "utcDate": "2026-09-19T16:30:00Z",
+   "status": "FINISHED",
+   "homeTeam": {
+    "name": "Nottingham Forest FC",
+    "shortName": "Nottingham",
+    "tla": "NOT"
+   },
+   "awayTeam": {
+    "name": "Coventry City FC",
+    "shortName": "Coventry City",
+    "tla": "COV"
+   }
+  },
+  {
+   "id": 560582,
+   "utcDate": "2026-09-20T13:00:00Z",
+   "status": "FINISHED",
+   "homeTeam": {
+    "name": "AFC Bournemouth",
+    "shortName": "Bournemouth",
+    "tla": "BOU"
+   },
+   "awayTeam": {
+    "name": "Liverpool FC",
+    "shortName": "Liverpool",
+    "tla": "LIV"
+   }
+  },
+  {
+   "id": 560585,
+   "utcDate": "2026-09-20T13:00:00Z",
+   "status": "FINISHED",
+   "homeTeam": {
+    "name": "Leeds United FC",
+    "shortName": "Leeds United",
+    "tla": "LEE"
+   },
+   "awayTeam": {
+    "name": "Crystal Palace FC",
+    "shortName": "Crystal Palace",
+    "tla": "CRY"
+   }
+  },
+  {
+   "id": 560590,
+   "utcDate": "2026-09-20T13:00:00Z",
+   "status": "FINISHED",
+   "homeTeam": {
+    "name": "Manchester City FC",
+    "shortName": "Man City",
+    "tla": "MCI"
+   },
+   "awayTeam": {
+    "name": "Sunderland AFC",
+    "shortName": "Sunderland",
+    "tla": "SUN"
+   }
+  },
+  {
+   "id": 560583,
+   "utcDate": "2026-09-20T15:30:00Z",
+   "status": "FINISHED",
+   "homeTeam": {
+    "name": "Fulham FC",
+    "shortName": "Fulham",
+    "tla": "FUL"
+   },
+   "awayTeam": {
+    "name": "Manchester United FC",
+    "shortName": "Man United",
+    "tla": "MUN"
+   }
+  },
+  {
+   "id": 560593,
+   "utcDate": "2026-10-10T11:30:00Z",
+   "status": "TIMED",
+   "homeTeam": {
+    "name": "Arsenal FC",
+    "shortName": "Arsenal",
+    "tla": "ARS"
+   },
+   "awayTeam": {
+    "name": "Leeds United FC",
+    "shortName": "Leeds United",
+    "tla": "LEE"
+   }
+  },
+  {
+   "id": 560592,
+   "utcDate": "2026-10-10T14:00:00Z",
+   "status": "TIMED",
+   "homeTeam": {
+    "name": "Sunderland AFC",
+    "shortName": "Sunderland",
+    "tla": "SUN"
+   },
+   "awayTeam": {
+    "name": "Brighton & Hove Albion FC",
+    "shortName": "Brighton Hove",
+    "tla": "BHA"
+   }
+  },
+  {
+   "id": 560595,
+   "utcDate": "2026-10-10T14:00:00Z",
+   "status": "TIMED",
+   "homeTeam": {
+    "name": "Chelsea FC",
+    "shortName": "Chelsea",
+    "tla": "CHE"
+   },
+   "awayTeam": {
+    "name": "AFC Bournemouth",
+    "shortName": "Bournemouth",
+    "tla": "BOU"
+   }
+  },
+  {
+   "id": 560599,
+   "utcDate": "2026-10-10T14:00:00Z",
+   "status": "TIMED",
+   "homeTeam": {
+    "name": "Ipswich Town FC",
+    "shortName": "Ipswich Town",
+    "tla": "IPS"
+   },
+   "awayTeam": {
+    "name": "Fulham FC",
+    "shortName": "Fulham",
+    "tla": "FUL"
+   }
+  },
+  {
+   "id": 560601,
+   "utcDate": "2026-10-10T14:00:00Z",
+   "status": "TIMED",
+   "homeTeam": {
+    "name": "Aston Villa FC",
+    "shortName": "Aston Villa",
+    "tla": "AVL"
+   },
+   "awayTeam": {
+    "name": "Brentford FC",
+    "shortName": "Brentford",
+    "tla": "BRE"
+   }
+  },
+  {
+   "id": 560600,
+   "utcDate": "2026-10-10T16:30:00Z",
+   "status": "TIMED",
+   "homeTeam": {
+    "name": "Manchester United FC",
+    "shortName": "Man United",
+    "tla": "MUN"
+   },
+   "awayTeam": {
+    "name": "Tottenham Hotspur FC",
+    "shortName": "Tottenham",
+    "tla": "TOT"
+   }
+  },
+  {
+   "id": 560594,
+   "utcDate": "2026-10-11T13:00:00Z",
+   "status": "TIMED",
+   "homeTeam": {
+    "name": "Hull City AFC",
+    "shortName": "Hull City",
+    "tla": "HUL"
+   },
+   "awayTeam": {
+    "name": "Everton FC",
+    "shortName": "Everton",
+    "tla": "EVE"
+   }
+  },
+  {
+   "id": 560596,
+   "utcDate": "2026-10-11T13:00:00Z",
+   "status": "TIMED",
+   "homeTeam": {
+    "name": "Crystal Palace FC",
+    "shortName": "Crystal Palace",
+    "tla": "CRY"
+   },
+   "awayTeam": {
+    "name": "Nottingham Forest FC",
+    "shortName": "Nottingham",
+    "tla": "NOT"
+   }
+  },
+  {
+   "id": 560598,
+   "utcDate": "2026-10-11T15:30:00Z",
+   "status": "TIMED",
+   "homeTeam": {
+    "name": "Liverpool FC",
+    "shortName": "Liverpool",
+    "tla": "LIV"
+   },
+   "awayTeam": {
+    "name": "Manchester City FC",
+    "shortName": "Man City",
+    "tla": "MCI"
+   }
+  },
+  {
+   "id": 560597,
+   "utcDate": "2026-10-12T19:00:00Z",
+   "status": "TIMED",
+   "homeTeam": {
+    "name": "Coventry City FC",
+    "shortName": "Coventry City",
+    "tla": "COV"
+   },
+   "awayTeam": {
+    "name": "Newcastle United FC",
+    "shortName": "Newcastle",
+    "tla": "NEW"
+   }
+  }
+ ]
+}

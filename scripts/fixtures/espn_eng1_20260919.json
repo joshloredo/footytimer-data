@@ -1,0 +1,156 @@
+{
+ "events": [
+  {
+   "date": "2026-09-19T11:30Z",
+   "shortName": "AVL @ TOT",
+   "competitions": [
+    {
+     "competitors": [
+      {
+       "homeAway": "home",
+       "team": {
+        "displayName": "Tottenham Hotspur"
+       }
+      },
+      {
+       "homeAway": "away",
+       "team": {
+        "displayName": "Aston Villa"
+       }
+      }
+     ],
+     "broadcasts": [
+      {
+       "market": "national",
+       "names": [
+        "USA Net",
+        "Universo"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "date": "2026-09-19T14:00Z",
+   "shortName": "ARS @ BHA",
+   "competitions": [
+    {
+     "competitors": [
+      {
+       "homeAway": "home",
+       "team": {
+        "displayName": "Brighton & Hove Albion"
+       }
+      },
+      {
+       "homeAway": "away",
+       "team": {
+        "displayName": "Arsenal"
+       }
+      }
+     ],
+     "broadcasts": [
+      {
+       "market": "national",
+       "names": [
+        "USA Net",
+        "Tele"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "date": "2026-09-19T14:00Z",
+   "shortName": "IPS @ EVE",
+   "competitions": [
+    {
+     "competitors": [
+      {
+       "homeAway": "home",
+       "team": {
+        "displayName": "Everton"
+       }
+      },
+      {
+       "homeAway": "away",
+       "team": {
+        "displayName": "Ipswich Town"
+       }
+      }
+     ],
+     "broadcasts": [
+      {
+       "market": "national",
+       "names": [
+        "Peacock"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "date": "2026-09-19T14:00Z",
+   "shortName": "HUL @ NEW",
+   "competitions": [
+    {
+     "competitors": [
+      {
+       "homeAway": "home",
+       "team": {
+        "displayName": "Newcastle United"
+       }
+      },
+      {
+       "homeAway": "away",
+       "team": {
+        "displayName": "Hull City"
+       }
+      }
+     ],
+     "broadcasts": [
+      {
+       "market": "national",
+       "names": [
+        "Peacock"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "date": "2026-09-19T16:30Z",
+   "shortName": "COV @ NFO",
+   "competitions": [
+    {
+     "competitors": [
+      {
+       "homeAway": "home",
+       "team": {
+        "displayName": "Nottingham Forest"
+       }
+      },
+      {
+       "homeAway": "away",
+       "team": {
+        "displayName": "Coventry City"
+       }
+      }
+     ],
+     "broadcasts": [
+      {
+       "market": "national",
+       "names": [
+        "NBC"
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

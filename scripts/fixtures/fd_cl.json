@@ -1,0 +1,274 @@
+{
+ "matches": [
+  {
+   "id": 575341,
+   "utcDate": "2026-10-13T16:45:00Z",
+   "status": "TIMED",
+   "homeTeam": {
+    "name": "Racing Club de Lens",
+    "shortName": "RC Lens",
+    "tla": "RCL"
+   },
+   "awayTeam": {
+    "name": "Sporting Clube de Portugal",
+    "shortName": "Sporting CP",
+    "tla": "SPO"
+   }
+  },
+  {
+   "id": 575342,
+   "utcDate": "2026-10-13T16:45:00Z",
+   "status": "TIMED",
+   "homeTeam": {
+    "name": "Sabah FK",
+    "shortName": "Sabah FK",
+    "tla": "SAB"
+   },
+   "awayTeam": {
+    "name": "SK Slavia Praha",
+    "shortName": "Slavia Praha",
+    "tla": "SLP"
+   }
+  },
+  {
+   "id": 575343,
+   "utcDate": "2026-10-13T19:00:00Z",
+   "status": "TIMED",
+   "homeTeam": {
+    "name": "FC Internazionale Milano",
+    "shortName": "Inter",
+    "tla": "INT"
+   },
+   "awayTeam": {
+    "name": "Club Brugge KV",
+    "shortName": "Club Brugge",
+    "tla": "BRU"
+   }
+  },
+  {
+   "id": 575344,
+   "utcDate": "2026-10-13T19:00:00Z",
+   "status": "TIMED",
+   "homeTeam": {
+    "name": "Galatasaray SK",
+    "shortName": "Galatasaray",
+    "tla": "GAL"
+   },
+   "awayTeam": {
+    "name": "FC Barcelona",
+    "shortName": "Barça",
+    "tla": "FCB"
+   }
+  },
+  {
+   "id": 575345,
+   "utcDate": "2026-10-13T19:00:00Z",
+   "status": "TIMED",
+   "homeTeam": {
+    "name": "Club Atlético de Madrid",
+    "shortName": "Atleti",
+    "tla": "ATL"
+   },
+   "awayTeam": {
+    "name": "Manchester United FC",
+    "shortName": "Man United",
+    "tla": "MUN"
+   }
+  },
+  {
+   "id": 575346,
+   "utcDate": "2026-10-13T19:00:00Z",
+   "status": "TIMED",
+   "homeTeam": {
+    "name": "Arsenal FC",
+    "shortName": "Arsenal",
+    "tla": "ARS"
+   },
+   "awayTeam": {
+    "name": "Lille OSC",
+    "shortName": "Lille",
+    "tla": "LIL"
+   }
+  },
+  {
+   "id": 575347,
+   "utcDate": "2026-10-13T19:00:00Z",
+   "status": "TIMED",
+   "homeTeam": {
+    "name": "Viking FK",
+    "shortName": "Viking",
+    "tla": "VIK"
+   },
+   "awayTeam": {
+    "name": "FC Bayern München",
+    "shortName": "Bayern",
+    "tla": "FCB"
+   }
+  },
+  {
+   "id": 575348,
+   "utcDate": "2026-10-13T19:00:00Z",
+   "status": "TIMED",
+   "homeTeam": {
+    "name": "RB Leipzig",
+    "shortName": "RB Leipzig",
+    "tla": "RBL"
+   },
+   "awayTeam": {
+    "name": "PSV",
+    "shortName": "PSV",
+    "tla": "PSV"
+   }
+  },
+  {
+   "id": 575349,
+   "utcDate": "2026-10-13T19:00:00Z",
+   "status": "TIMED",
+   "homeTeam": {
+    "name": "Villarreal CF",
+    "shortName": "Villarreal",
+    "tla": "VIL"
+   },
+   "awayTeam": {
+    "name": "SSC Napoli",
+    "shortName": "Napoli",
+    "tla": "NAP"
+   }
+  },
+  {
+   "id": 575350,
+   "utcDate": "2026-10-14T16:45:00Z",
+   "status": "TIMED",
+   "homeTeam": {
+    "name": "LASK Linz",
+    "shortName": "LASK",
+    "tla": "LIN"
+   },
+   "awayTeam": {
+    "name": "Liverpool FC",
+    "shortName": "Liverpool",
+    "tla": "LIV"
+   }
+  },
+  {
+   "id": 575351,
+   "utcDate": "2026-10-14T16:45:00Z",
+   "status": "TIMED",
+   "homeTeam": {
+    "name": "Feyenoord Rotterdam",
+    "shortName": "Feyenoord",
+    "tla": "FEY"
+   },
+   "awayTeam": {
+    "name": "Como 1907",
+    "shortName": "Como 1907",
+    "tla": "COM"
+   }
+  },
+  {
+   "id": 575352,
+   "utcDate": "2026-10-14T19:00:00Z",
+   "status": "TIMED",
+   "homeTeam": {
+    "name": "AS Roma",
+    "shortName": "Roma",
+    "tla": "ROM"
+   },
+   "awayTeam": {
+    "name": "Real Madrid CF",
+    "shortName": "Real Madrid",
+    "tla": "RMA"
+   }
+  },
+  {
+   "id": 575353,
+   "utcDate": "2026-10-14T19:00:00Z",
+   "status": "TIMED",
+   "homeTeam": {
+    "name": "Manchester City FC",
+    "shortName": "Man City",
+    "tla": "MCI"
+   },
+   "awayTeam": {
+    "name": "Paris Saint-Germain FC",
+    "shortName": "PSG",
+    "tla": "PSG"
+   }
+  },
+  {
+   "id": 575354,
+   "utcDate": "2026-10-14T19:00:00Z",
+   "status": "TIMED",
+   "homeTeam": {
+    "name": "FK Bodø/Glimt",
+    "shortName": "Bodø/Glimt",
+    "tla": "FK"
+   },
+   "awayTeam": {
+    "name": "Borussia Dortmund",
+    "shortName": "Dortmund",
+    "tla": "BVB"
+   }
+  },
+  {
+   "id": 575355,
+   "utcDate": "2026-10-14T19:00:00Z",
+   "status": "TIMED",
+   "homeTeam": {
+    "name": "Aston Villa FC",
+    "shortName": "Aston Villa",
+    "tla": "AVL"
+   },
+   "awayTeam": {
+    "name": "Fenerbahçe SK",
+    "shortName": "Fenerbahçe",
+    "tla": "FEN"
+   }
+  },
+  {
+   "id": 575356,
+   "utcDate": "2026-10-14T19:00:00Z",
+   "status": "TIMED",
+   "homeTeam": {
+    "name": "Real Betis Balompié",
+    "shortName": "Real Betis",
+    "tla": "BET"
+   },
+   "awayTeam": {
+    "name": "FC Porto",
+    "shortName": "Porto",
+    "tla": "FCP"
+   }
+  },
+  {
+   "id": 575357,
+   "utcDate": "2026-10-14T19:00:00Z",
+   "status": "TIMED",
+   "homeTeam": {
+    "name": "FK Shakhtar Donetsk",
+    "shortName": "Shaktar",
+    "tla": "SHD"
+   },
+   "awayTeam": {
+    "name": "PAE AEK",
+    "shortName": "PAE AEK",
+    "tla": "AEK"
+   }
+  },
+  {
+   "id": 575358,
+   "utcDate": "2026-10-14T19:00:00Z",
+   "status": "TIMED",
+   "homeTeam": {
+    "name": "ŠK Slovan Bratislava",
+    "shortName": "Sl. Bratislava",
+    "tla": "SBA"
+   },
+   "awayTeam": {
+    "name": "VfB Stuttgart",
+    "shortName": "Stuttgart",
+    "tla": "VFB"
+   }
+  }
+ ]
+}

@@ -1,0 +1,126 @@
+{
+ "events": [
+  {
+   "date": "2026-09-20T13:00Z",
+   "shortName": "LIV @ BOU",
+   "competitions": [
+    {
+     "competitors": [
+      {
+       "homeAway": "home",
+       "team": {
+        "displayName": "AFC Bournemouth"
+       }
+      },
+      {
+       "homeAway": "away",
+       "team": {
+        "displayName": "Liverpool"
+       }
+      }
+     ],
+     "broadcasts": [
+      {
+       "market": "national",
+       "names": [
+        "USA Net",
+        "Tele"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "date": "2026-09-20T13:00Z",
+   "shortName": "CRY @ LEE",
+   "competitions": [
+    {
+     "competitors": [
+      {
+       "homeAway": "home",
+       "team": {
+        "displayName": "Leeds United"
+       }
+      },
+      {
+       "homeAway": "away",
+       "team": {
+        "displayName": "Crystal Palace"
+       }
+      }
+     ],
+     "broadcasts": [
+      {
+       "market": "national",
+       "names": [
+        "Peacock"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "date": "2026-09-20T13:00Z",
+   "shortName": "SUN @ MNC",
+   "competitions": [
+    {
+     "competitors": [
+      {
+       "homeAway": "home",
+       "team": {
+        "displayName": "Manchester City"
+       }
+      },
+      {
+       "homeAway": "away",
+       "team": {
+        "displayName": "Sunderland"
+       }
+      }
+     ],
+     "broadcasts": [
+      {
+       "market": "national",
+       "names": [
+        "Peacock"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "date": "2026-09-20T15:30Z",
+   "shortName": "MAN @ FUL",
+   "competitions": [
+    {
+     "competitors": [
+      {
+       "homeAway": "home",
+       "team": {
+        "displayName": "Fulham"
+       }
+      },
+      {
+       "homeAway": "away",
+       "team": {
+        "displayName": "Manchester United"
+       }
+      }
+     ],
+     "broadcasts": [
+      {
+       "market": "national",
+       "names": [
+        "NBC",
+        "Tele"
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

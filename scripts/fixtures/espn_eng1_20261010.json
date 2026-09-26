@@ -1,0 +1,142 @@
+{
+ "events": [
+  {
+   "date": "2026-10-10T11:30Z",
+   "shortName": "LEE @ ARS",
+   "competitions": [
+    {
+     "competitors": [
+      {
+       "homeAway": "home",
+       "team": {
+        "displayName": "Arsenal"
+       }
+      },
+      {
+       "homeAway": "away",
+       "team": {
+        "displayName": "Leeds United"
+       }
+      }
+     ],
+     "broadcasts": []
+    }
+   ]
+  },
+  {
+   "date": "2026-10-10T14:00Z",
+   "shortName": "BRE @ AVL",
+   "competitions": [
+    {
+     "competitors": [
+      {
+       "homeAway": "home",
+       "team": {
+        "displayName": "Aston Villa"
+       }
+      },
+      {
+       "homeAway": "away",
+       "team": {
+        "displayName": "Brentford"
+       }
+      }
+     ],
+     "broadcasts": []
+    }
+   ]
+  },
+  {
+   "date": "2026-10-10T14:00Z",
+   "shortName": "BOU @ CHE",
+   "competitions": [
+    {
+     "competitors": [
+      {
+       "homeAway": "home",
+       "team": {
+        "displayName": "Chelsea"
+       }
+      },
+      {
+       "homeAway": "away",
+       "team": {
+        "displayName": "AFC Bournemouth"
+       }
+      }
+     ],
+     "broadcasts": []
+    }
+   ]
+  },
+  {
+   "date": "2026-10-10T14:00Z",
+   "shortName": "FUL @ IPS",
+   "competitions": [
+    {
+     "competitors": [
+      {
+       "homeAway": "home",
+       "team": {
+        "displayName": "Ipswich Town"
+       }
+      },
+      {
+       "homeAway": "away",
+       "team": {
+        "displayName": "Fulham"
+       }
+      }
+     ],
+     "broadcasts": []
+    }
+   ]
+  },
+  {
+   "date": "2026-10-10T14:00Z",
+   "shortName": "BHA @ SUN",
+   "competitions": [
+    {
+     "competitors": [
+      {
+       "homeAway": "home",
+       "team": {
+        "displayName": "Sunderland"
+       }
+      },
+      {
+       "homeAway": "away",
+       "team": {
+        "displayName": "Brighton & Hove Albion"
+       }
+      }
+     ],
+     "broadcasts": []
+    }
+   ]
+  },
+  {
+   "date": "2026-10-10T16:30Z",
+   "shortName": "TOT @ MAN",
+   "competitions": [
+    {
+     "competitors": [
+      {
+       "homeAway": "home",
+       "team": {
+        "displayName": "Manchester United"
+       }
+      },
+      {
+       "homeAway": "away",
+       "team": {
+        "displayName": "Tottenham Hotspur"
+       }
+      }
+     ],
+     "broadcasts": []
+    }
+   ]
+  }
+ ]
+}

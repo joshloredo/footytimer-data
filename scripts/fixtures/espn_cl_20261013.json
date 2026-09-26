@@ -1,0 +1,274 @@
+{
+ "events": [
+  {
+   "date": "2026-10-13T16:45Z",
+   "shortName": "SCP @ RCL",
+   "competitions": [
+    {
+     "competitors": [
+      {
+       "homeAway": "home",
+       "team": {
+        "displayName": "Lens"
+       }
+      },
+      {
+       "homeAway": "away",
+       "team": {
+        "displayName": "Sporting CP"
+       }
+      }
+     ],
+     "broadcasts": [
+      {
+       "market": "national",
+       "names": [
+        "Paramount+"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "date": "2026-10-13T16:45Z",
+   "shortName": "SLP @ SAB",
+   "competitions": [
+    {
+     "competitors": [
+      {
+       "homeAway": "home",
+       "team": {
+        "displayName": "Sabah FK"
+       }
+      },
+      {
+       "homeAway": "away",
+       "team": {
+        "displayName": "Slavia Prague"
+       }
+      }
+     ],
+     "broadcasts": [
+      {
+       "market": "national",
+       "names": [
+        "Paramount+"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "date": "2026-10-13T19:00Z",
+   "shortName": "LILL @ ARS",
+   "competitions": [
+    {
+     "competitors": [
+      {
+       "homeAway": "home",
+       "team": {
+        "displayName": "Arsenal"
+       }
+      },
+      {
+       "homeAway": "away",
+       "team": {
+        "displayName": "Lille"
+       }
+      }
+     ],
+     "broadcasts": [
+      {
+       "market": "national",
+       "names": [
+        "Paramount+"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "date": "2026-10-13T19:00Z",
+   "shortName": "MAN @ ATM",
+   "competitions": [
+    {
+     "competitors": [
+      {
+       "homeAway": "home",
+       "team": {
+        "displayName": "Atlético Madrid"
+       }
+      },
+      {
+       "homeAway": "away",
+       "team": {
+        "displayName": "Manchester United"
+       }
+      }
+     ],
+     "broadcasts": [
+      {
+       "market": "national",
+       "names": [
+        "Paramount+"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "date": "2026-10-13T19:00Z",
+   "shortName": "BAR @ GAL",
+   "competitions": [
+    {
+     "competitors": [
+      {
+       "homeAway": "home",
+       "team": {
+        "displayName": "Galatasaray"
+       }
+      },
+      {
+       "homeAway": "away",
+       "team": {
+        "displayName": "Barcelona"
+       }
+      }
+     ],
+     "broadcasts": [
+      {
+       "market": "national",
+       "names": [
+        "Paramount+"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "date": "2026-10-13T19:00Z",
+   "shortName": "BRU @ INT",
+   "competitions": [
+    {
+     "competitors": [
+      {
+       "homeAway": "home",
+       "team": {
+        "displayName": "Internazionale"
+       }
+      },
+      {
+       "homeAway": "away",
+       "team": {
+        "displayName": "Club Brugge"
+       }
+      }
+     ],
+     "broadcasts": [
+      {
+       "market": "national",
+       "names": [
+        "Paramount+"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "date": "2026-10-13T19:00Z",
+   "shortName": "PSV @ RBL",
+   "competitions": [
+    {
+     "competitors": [
+      {
+       "homeAway": "home",
+       "team": {
+        "displayName": "RB Leipzig"
+       }
+      },
+      {
+       "homeAway": "away",
+       "team": {
+        "displayName": "PSV Eindhoven"
+       }
+      }
+     ],
+     "broadcasts": [
+      {
+       "market": "national",
+       "names": [
+        "Paramount+"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "date": "2026-10-13T19:00Z",
+   "shortName": "MUN @ VIK",
+   "competitions": [
+    {
+     "competitors": [
+      {
+       "homeAway": "home",
+       "team": {
+        "displayName": "Viking FK"
+       }
+      },
+      {
+       "homeAway": "away",
+       "team": {
+        "displayName": "Bayern Munich"
+       }
+      }
+     ],
+     "broadcasts": [
+      {
+       "market": "national",
+       "names": [
+        "Paramount+"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "date": "2026-10-13T19:00Z",
+   "shortName": "NAP @ VIL",
+   "competitions": [
+    {
+     "competitors": [
+      {
+       "homeAway": "home",
+       "team": {
+        "displayName": "Villarreal"
+       }
+      },
+      {
+       "homeAway": "away",
+       "team": {
+        "displayName": "Napoli"
+       }
+      }
+     ],
+     "broadcasts": [
+      {
+       "market": "national",
+       "names": [
+        "Paramount+"
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

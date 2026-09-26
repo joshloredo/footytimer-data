@@ -8,5 +8,6 @@ Design: footytimer repo `docs/plans/2026-09-26-broadcast-feed-design.md`.
 - Test: `/usr/bin/python3 -m unittest discover -s scripts -p 'test_*.py'`
 - Dry run (no writes, no push): `/usr/bin/python3 scripts/build_feed.py --dry-run`
 - Status for the morning Signal message: `state/status.line`. Log: `logs/feed.log`.
+- Code and alias changes pushed to `main` reach the mini by themselves: each run fast-forwards before publishing, so a change takes effect the following night.
 - Install: `cp launchd/com.joshloredo.footytimer-feed.plist ~/Library/LaunchAgents/ && launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.joshloredo.footytimer-feed.plist`
 - Rollback: `launchctl bootout gui/$(id -u)/com.joshloredo.footytimer-feed && rm ~/Library/LaunchAgents/com.joshloredo.footytimer-feed.plist`

@@ -315,6 +315,9 @@ def take_lock(root: Path) -> bool:
 
 def publish(root: Path, now: datetime) -> None:
     git = ["git", "-C", str(root)]
+    # Fast-forward to commits pushed from elsewhere (alias or code fixes) so our push stays a fast-forward.
+    # Best effort: when offline or diverged, the push below fails and reports it.
+    subprocess.run(git + ["pull", "-q", "--ff-only", "origin", "main"], capture_output=True)
     subprocess.run(git + ["add", "docs/broadcasts.json"], check=True, capture_output=True)
     subprocess.run(git + ["commit", "-q", "-m", f"feed: {now.astimezone(ET):%Y-%m-%d}"], check=True, capture_output=True)
     subprocess.run(git + ["push", "-q", "origin", "HEAD:main"], check=True, capture_output=True)

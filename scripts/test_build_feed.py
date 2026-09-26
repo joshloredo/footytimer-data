@@ -1,5 +1,6 @@
 import json
 import os
+import subprocess
 import sys
 import tempfile
 import time
@@ -26,6 +27,18 @@ CL = bf.parse_fd(load("fd_cl.json"), "CL")
 
 def fixture_id(fixtures, label, day):
     return next(f["id"] for f in fixtures if f["label"] == label and f["utc"].strftime("%Y%m%d") == day)
+
+
+def fake_fetch(url, headers):
+    """Recorded responses for a 2026-09-18 run; any other ESPN date has no events."""
+    if "competitions/PL/matches" in url:
+        return load("fd_pl.json")
+    if "competitions/CL/matches" in url:
+        return {"matches": []}
+    for day in ("20260919", "20260920"):
+        if f"eng.1/scoreboard?dates={day}" in url:
+            return load(f"espn_eng1_{day}.json")
+    return {"events": []}
 
 
 class MatchingTests(unittest.TestCase):
@@ -204,19 +217,6 @@ class ScheduleGuardTests(unittest.TestCase):
 
 class DryRunTests(unittest.TestCase):
     def test_dry_run_builds_feed_without_writing(self):
-        responses = {
-            "competitions/PL/matches": load("fd_pl.json"),
-            "competitions/CL/matches": {"matches": []},
-            "eng.1/scoreboard?dates=20260919": load("espn_eng1_20260919.json"),
-            "eng.1/scoreboard?dates=20260920": load("espn_eng1_20260920.json"),
-        }
-
-        def fake_fetch(url, headers):
-            for key, payload in responses.items():
-                if key in url:
-                    return payload
-            return {"events": []}
-
         with tempfile.TemporaryDirectory() as d:
             root = Path(d)
             (root / "docs").mkdir()
@@ -227,6 +227,71 @@ class DryRunTests(unittest.TestCase):
             self.assertFalse((root / "docs" / "broadcasts.json").exists())
             self.assertFalse((root / "state" / "status.line").exists())
             self.assertFalse((root / "state" / "lock").exists())
+
+
+class PublishTests(unittest.TestCase):
+    NOW = utc("2026-09-18T07:05:00Z")
+
+    def git(self, cwd, *args):
+        return subprocess.run(["git", "-C", str(cwd), *args], check=True, capture_output=True, text=True).stdout.strip()
+
+    def configure(self, repo):
+        for key, value in (("user.name", "Test"), ("user.email", "test@example.com"), ("commit.gpgsign", "false")):
+            self.git(repo, "config", key, value)
+
+    def make_clone(self, d):
+        """A bare origin plus a working clone laid out like the mini's ~/footytimer-data."""
+        origin, work = Path(d) / "origin.git", Path(d) / "work"
+        subprocess.run(["git", "init", "-q", "--bare", "-b", "main", str(origin)], check=True)
+        subprocess.run(["git", "init", "-q", "-b", "main", str(work)], check=True)
+        self.configure(work)
+        (work / "docs").mkdir()
+        (work / "docs" / "CNAME").write_text("footytimer.joshloredo.com\n", encoding="utf-8")
+        (work / ".gitignore").write_text(".env\nstate/\nlogs/\n", encoding="utf-8")
+        (work / ".env").write_text("FOOTBALL_DATA_API_KEY=test\n", encoding="utf-8")
+        self.git(work, "add", "-A")
+        self.git(work, "commit", "-q", "-m", "init")
+        self.git(work, "remote", "add", "origin", str(origin))
+        self.git(work, "push", "-q", "origin", "HEAD:main")
+        return origin, work
+
+    def run_job(self, work):
+        return bf.main([], root=work, fetch=fake_fetch, now=self.NOW, sleep=lambda seconds: None)
+
+    def test_publishes_feed_and_records_success(self):
+        with tempfile.TemporaryDirectory() as d:
+            origin, work = self.make_clone(d)
+            self.assertEqual(self.run_job(work), 0)
+            self.assertEqual(self.git(origin, "log", "-1", "--format=%s", "main"), "feed: 2026-09-18")
+            published = json.loads(self.git(origin, "show", "main:docs/broadcasts.json"))
+            self.assertEqual(published["generatedAt"], "2026-09-18T07:05:00Z")
+            self.assertTrue(published["matches"])
+            self.assertEqual((work / "state" / "last-success").read_text(encoding="utf-8").strip(), "2026-09-18T07:05:00Z")
+            self.assertTrue((work / "state" / "status.line").read_text(encoding="utf-8").startswith("⚽ FootyTimer ✓"))
+            self.assertTrue((work / "state" / "fixtures-last.json").exists())
+
+    def test_picks_up_commits_pushed_from_elsewhere(self):
+        with tempfile.TemporaryDirectory() as d:
+            origin, work = self.make_clone(d)
+            other = Path(d) / "other"
+            subprocess.run(["git", "clone", "-q", str(origin), str(other)], check=True)
+            self.configure(other)
+            (other / "README.md").write_text("alias update\n", encoding="utf-8")
+            self.git(other, "add", "README.md")
+            self.git(other, "commit", "-q", "-m", "update aliases")
+            self.git(other, "push", "-q", "origin", "HEAD:main")
+            self.assertEqual(self.run_job(work), 0)
+            self.assertEqual(self.git(origin, "log", "-2", "--format=%s", "main").splitlines(),
+                             ["feed: 2026-09-18", "update aliases"])
+
+    def test_push_failure_keeps_file_and_reports(self):
+        with tempfile.TemporaryDirectory() as d:
+            origin, work = self.make_clone(d)
+            self.git(work, "remote", "set-url", "origin", str(Path(d) / "missing.git"))
+            self.assertEqual(self.run_job(work), 1)
+            self.assertTrue((work / "docs" / "broadcasts.json").exists())
+            self.assertIn("push failed", (work / "state" / "status.line").read_text(encoding="utf-8"))
+            self.assertFalse((work / "state" / "last-success").exists())
 
 
 if __name__ == "__main__":

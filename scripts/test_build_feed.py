@@ -45,7 +45,7 @@ class MatchingTests(unittest.TestCase):
     def test_normalize_strips_club_suffixes_and_accents(self):
         self.assertEqual(bf.normalize("Brighton & Hove Albion FC"), bf.normalize("Brighton & Hove Albion"))
         self.assertEqual(bf.normalize("AFC Bournemouth"), "bournemouth")
-        self.assertEqual(bf.normalize("Atlético Madrid"), "atletico madrid")
+        self.assertEqual(bf.normalize("Málaga CF"), "malaga")
 
     def test_display_channels_maps_dedupes_caps_and_flags(self):
         shown, unknown = bf.display_channels(["USA Net", "Tele", "USA Net", "Peacock", "Kanal 7"])
@@ -85,6 +85,35 @@ class MatchingTests(unittest.TestCase):
              "away": {"brighton and hove albion"}, "label": "SUN v BHA"}
         event = {"utc": t, "home": "sunderland", "away": "brighton and hove albion", "channels": ["USA Net"], "name": "BHA @ SUN"}
         self.assertEqual(bf.match_events([a, b], [event]), ({2: ["USA Net"]}, []))
+
+    def test_aliases_join_espn_and_football_data_names(self):
+        pairs = [
+            ("AEK Athens", "PAE AEK"),
+            ("Atlético Madrid", "Club Atlético de Madrid"),
+            ("Bayern Munich", "FC Bayern München"),
+            ("Bodo/Glimt", "FK Bodø/Glimt"),
+            ("Como", "Como 1907"),
+            ("Internazionale", "FC Internazionale Milano"),
+            ("Lens", "Racing Club de Lens"),
+            ("PSV Eindhoven", "PSV"),
+            ("Shakhtar Donetsk", "FK Shakhtar Donetsk"),
+            ("Slavia Prague", "SK Slavia Praha"),
+            ("Slovan Bratislava", "ŠK Slovan Bratislava"),
+        ]
+        for espn_name, fd_name in pairs:
+            with self.subTest(espn_name=espn_name):
+                self.assertEqual(bf.normalize(espn_name), bf.normalize(fd_name))
+
+    def test_both_sides_renamed_still_matches_via_alias(self):
+        t = utc("2026-10-14T19:00:00Z")
+        shd = {"id": 7, "comp": "CL", "utc": t, "status": "TIMED",
+               "home": {bf.normalize("FK Shakhtar Donetsk"), bf.normalize("Shaktar")},
+               "away": {bf.normalize("PAE AEK")}, "label": "SHD v AEK"}
+        other = {"id": 8, "comp": "CL", "utc": t, "status": "TIMED",
+                 "home": {bf.normalize("AS Roma")}, "away": {bf.normalize("Real Madrid CF")}, "label": "ROM v RMA"}
+        event = {"utc": t, "home": bf.normalize("Shakhtar Donetsk"), "away": bf.normalize("AEK Athens"),
+                 "channels": ["Paramount+"], "name": "AEK @ SHK"}
+        self.assertEqual(bf.match_events([shd, other], [event]), ({7: ["Paramount+"]}, []))
 
 
 class FeedTests(unittest.TestCase):

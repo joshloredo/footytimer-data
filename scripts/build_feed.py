@@ -31,7 +31,20 @@ LOG_MAX_BYTES = 1_000_000
 CHANNEL_NAMES = {"USA Net": "USA Network", "Tele": "Telemundo", "CBSSN": "CBS Sports Network"}
 KNOWN_CHANNELS = {"NBC", "Peacock", "USA Network", "Telemundo", "Universo", "NBCSN", "CNBC",
                   "Paramount+", "CBS", "CBS Sports Network", "TUDN", "UniMás", "ViX"}
-ALIASES: Dict[str, str] = {}  # normalised ESPN club name -> normalised football-data name, only when they differ
+ALIASES: Dict[str, str] = {  # normalised ESPN club name -> normalised football-data name, only when they differ
+    # found by scanning PL/CL fixtures against ESPN on 2026-09-26
+    "aek athens": "pae aek",
+    "atletico madrid": "club atletico de madrid",
+    "bayern munich": "bayern munchen",
+    "bodo glimt": "fk bod glimt",
+    "como": "como 1907",
+    "internazionale": "internazionale milano",
+    "lens": "racing club de lens",
+    "psv eindhoven": "psv",
+    "shakhtar donetsk": "fk shakhtar donetsk",
+    "slavia prague": "sk slavia praha",
+    "slovan bratislava": "sk slovan bratislava",
+}
 
 Fetch = Callable[[str, Dict[str, str]], dict]
 

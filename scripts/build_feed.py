@@ -27,7 +27,6 @@ FD_RETRY_DELAYS = (10, 30, 90)  # first try + 3 retries
 ESPN_RETRY_DELAYS = (5,)        # first try + 1 retry
 STALE_LOCK = timedelta(hours=2)
 LOG_MAX_BYTES = 1_000_000
-USER_AGENT = "FootyTimerFeed/1.0 (+https://footytimer.joshloredo.com)"
 
 CHANNEL_NAMES = {"USA Net": "USA Network", "Tele": "Telemundo", "CBSSN": "CBS Sports Network"}
 KNOWN_CHANNELS = {"NBC", "Peacock", "USA Network", "Telemundo", "Universo", "NBCSN", "CNBC",
@@ -232,7 +231,8 @@ def fail(root: Path, dry_run: bool, reason: str, previous: Optional[dict], now: 
 # ---------- I/O ----------
 
 def http_json(url: str, headers: Dict[str, str]) -> dict:
-    request = urllib.request.Request(url, headers={"User-Agent": USER_AGENT, "Accept-Encoding": "identity", **headers})
+    # ESPN's CDN answers unfamiliar User-Agents with 403; urllib's own default identity is accepted
+    request = urllib.request.Request(url, headers=headers)
     with urllib.request.urlopen(request, timeout=20) as response:
         return json.load(response)
 

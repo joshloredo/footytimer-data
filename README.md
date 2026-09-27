@@ -17,4 +17,8 @@ Design: footytimer repo `docs/plans/2026-09-26-broadcast-feed-design.md`.
   5. Create `.env` with mode 600 (`touch .env && chmod 600 .env`), containing `FOOTBALL_DATA_API_KEY=…`.
   6. Install the LaunchAgent: `cp launchd/com.joshloredo.footytimer-feed.plist ~/Library/LaunchAgents/ && launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.joshloredo.footytimer-feed.plist`
 - To take a bad feed down: revert the feed commit on GitHub. The next run adopts origin/main and publishes a fresh feed.
+- Switches the app reads, at most once an hour, from `docs/config.json` (served at https://footytimer.joshloredo.com/config.json). Edit it on GitHub:
+  - `"listings": false` hides TV listings everywhere in the app: the Watch row, the widget's broadcaster line and its settings toggle.
+  - `"crests": false` draws each club's colour badge (its colours and three-letter code) instead of its crest, in the app and the widgets.
+  - A switch is on unless the file says otherwise. Devices keep the last values they fetched, so one that's off stays off offline. Turn it back on by setting it to `true`; deleting the file leaves each device as it was.
 - Rollback: `launchctl bootout gui/$(id -u)/com.joshloredo.footytimer-feed && rm ~/Library/LaunchAgents/com.joshloredo.footytimer-feed.plist`

@@ -12,6 +12,7 @@ import re
 import subprocess
 import sys
 import time
+import traceback
 import unicodedata
 import urllib.request
 from datetime import datetime, timedelta, timezone
@@ -326,17 +327,31 @@ def take_lock(root: Path) -> bool:
         return True
 
 
-def publish(root: Path, now: datetime) -> None:
+def sync(root: Path) -> None:
+    # Start every run from GitHub's main. Tonight's feed supersedes any unpushed one, so commits pushed
+    # from elsewhere (a revert of a bad feed, a hand edit, a code fix) can't make the histories diverge.
+    # reset --hard leaves untracked and ignored files (.env, state/, logs/) alone.
+    # Offline, the tree stays as it is and the push fails later and reports it.
     git = ["git", "-C", str(root)]
-    # Fast-forward to commits pushed from elsewhere (alias or code fixes) so our push stays a fast-forward.
-    # Best effort: when offline or diverged, the push below fails and reports it.
-    subprocess.run(git + ["pull", "-q", "--ff-only", "origin", "main"], capture_output=True)
-    subprocess.run(git + ["add", "docs/broadcasts.json"], check=True, capture_output=True)
-    subprocess.run(git + ["commit", "-q", "-m", f"feed: {now.astimezone(ET):%Y-%m-%d}"], check=True, capture_output=True)
-    subprocess.run(git + ["push", "-q", "origin", "HEAD:main"], check=True, capture_output=True)
+    if subprocess.run(git + ["fetch", "-q", "origin", "main"], capture_output=True).returncode == 0:
+        subprocess.run(git + ["reset", "-q", "--hard", "origin/main"], capture_output=True)
+
+
+def publish(root: Path, now: datetime) -> Optional[str]:
+    """Commit and push the feed. On failure, logs git's error and returns which step failed."""
+    for step, *args in (("add", "docs/broadcasts.json"),
+                        ("commit", "-q", "-m", f"feed: {now.astimezone(ET):%Y-%m-%d}"),
+                        ("push", "-q", "origin", "HEAD:main")):
+        result = subprocess.run(["git", "-C", str(root), step, *args], capture_output=True, text=True)
+        if result.returncode:
+            print(result.stderr.strip())
+            return f"git {step} failed (exit {result.returncode})"
+    return None
 
 
 def run(root: Path, dry_run: bool, fetch: Fetch, now: datetime, sleep) -> int:
+    if not dry_run:
+        sync(root)  # first, so `previous` is the live feed
     feed_path = root / "docs" / "broadcasts.json"
     previous = read_json(feed_path)
     try:
@@ -372,10 +387,9 @@ def run(root: Path, dry_run: bool, fetch: Fetch, now: datetime, sleep) -> int:
         return 0
 
     write_json_atomic(feed_path, feed)
-    try:
-        publish(root, now)
-    except subprocess.CalledProcessError as exc:
-        return fail(root, False, f"push failed (git exit {exc.returncode})", previous, now)
+    failure = publish(root, now)
+    if failure:
+        return fail(root, False, failure, previous, now)
     write_json_atomic(root / "state" / "fixtures-last.json", current)
     (root / "state" / "last-success").write_text(now.strftime("%Y-%m-%dT%H:%M:%SZ") + "\n", encoding="utf-8")
     (root / "state" / "status.line").write_text(line + "\n", encoding="utf-8")
@@ -398,6 +412,10 @@ def main(argv: List[str], root: Path = Path(__file__).resolve().parent.parent, f
         return 0
     try:
         return run(root, dry_run, fetch, now, sleep)
+    except Exception as exc:
+        traceback.print_exc(file=sys.stdout)  # the log keeps where it crashed
+        return fail(root, dry_run, f"crashed ({type(exc).__name__}: {exc})",
+                    read_json(root / "docs" / "broadcasts.json"), now)
     finally:
         (root / "state" / "lock").rmdir()
 

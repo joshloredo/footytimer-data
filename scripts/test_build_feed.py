@@ -1,3 +1,5 @@
+import contextlib
+import io
 import json
 import os
 import subprocess
@@ -258,8 +260,26 @@ class DryRunTests(unittest.TestCase):
             self.assertFalse((root / "state" / "lock").exists())
 
 
+class CrashTests(unittest.TestCase):
+    def test_crash_writes_a_status_line(self):
+        with tempfile.TemporaryDirectory() as d:  # not a git repo, so the sync is skipped
+            root = Path(d)
+            (root / "docs").mkdir()
+            (root / "state").mkdir()
+            (root / ".env").write_text("FOOTBALL_DATA_API_KEY=test\n", encoding="utf-8")
+            (root / "state" / "fixtures-last.json").write_text("[1]\n", encoding="utf-8")  # a list where a dict belongs
+            with contextlib.redirect_stdout(io.StringIO()) as log:
+                code = bf.main([], root=root, fetch=fake_fetch,
+                               now=utc("2026-09-18T07:05:00Z"), sleep=lambda seconds: None)
+            self.assertEqual(code, 1)
+            self.assertIn("crashed (AttributeError", (root / "state" / "status.line").read_text(encoding="utf-8"))
+            self.assertIn("Traceback", log.getvalue())  # where it crashed, for the log
+            self.assertFalse((root / "state" / "lock").exists())
+
+
 class PublishTests(unittest.TestCase):
     NOW = utc("2026-09-18T07:05:00Z")
+    NEXT_NIGHT = utc("2026-09-19T07:05:00Z")
 
     def git(self, cwd, *args):
         return subprocess.run(["git", "-C", str(cwd), *args], check=True, capture_output=True, text=True).stdout.strip()
@@ -284,8 +304,18 @@ class PublishTests(unittest.TestCase):
         self.git(work, "push", "-q", "origin", "HEAD:main")
         return origin, work
 
-    def run_job(self, work):
-        return bf.main([], root=work, fetch=fake_fetch, now=self.NOW, sleep=lambda seconds: None)
+    def push_from_elsewhere(self, d, origin, path, text, message):
+        """Commit a change to origin from a second clone, as the dev Mac or GitHub's web editor would."""
+        other = Path(d) / "other"
+        subprocess.run(["git", "clone", "-q", str(origin), str(other)], check=True)
+        self.configure(other)
+        (other / path).write_text(text, encoding="utf-8")
+        self.git(other, "add", path)
+        self.git(other, "commit", "-q", "-m", message)
+        self.git(other, "push", "-q", "origin", "HEAD:main")
+
+    def run_job(self, work, now=NOW):
+        return bf.main([], root=work, fetch=fake_fetch, now=now, sleep=lambda seconds: None)
 
     def test_publishes_feed_and_records_success(self):
         with tempfile.TemporaryDirectory() as d:
@@ -302,24 +332,43 @@ class PublishTests(unittest.TestCase):
     def test_picks_up_commits_pushed_from_elsewhere(self):
         with tempfile.TemporaryDirectory() as d:
             origin, work = self.make_clone(d)
-            other = Path(d) / "other"
-            subprocess.run(["git", "clone", "-q", str(origin), str(other)], check=True)
-            self.configure(other)
-            (other / "README.md").write_text("alias update\n", encoding="utf-8")
-            self.git(other, "add", "README.md")
-            self.git(other, "commit", "-q", "-m", "update aliases")
-            self.git(other, "push", "-q", "origin", "HEAD:main")
+            self.push_from_elsewhere(d, origin, "README.md", "alias update\n", "update aliases")
             self.assertEqual(self.run_job(work), 0)
             self.assertEqual(self.git(origin, "log", "-2", "--format=%s", "main").splitlines(),
                              ["feed: 2026-09-18", "update aliases"])
+
+    def test_recovers_after_the_feed_is_changed_elsewhere(self):
+        # e.g. a bad feed reverted, or a wrong listing removed by hand, on GitHub
+        with tempfile.TemporaryDirectory() as d:
+            origin, work = self.make_clone(d)
+            self.assertEqual(self.run_job(work), 0)
+            feed = json.loads(self.git(origin, "show", "main:docs/broadcasts.json"))
+            feed["matches"].popitem()
+            self.push_from_elsewhere(d, origin, "docs/broadcasts.json", json.dumps(feed), "Remove a wrong listing")
+            self.assertEqual(self.run_job(work, now=self.NEXT_NIGHT), 0)
+            self.assertEqual(self.git(origin, "log", "-2", "--format=%s", "main").splitlines(),
+                             ["feed: 2026-09-19", "Remove a wrong listing"])
+
+    def test_recovers_after_a_failed_push_and_a_commit_from_elsewhere(self):
+        with tempfile.TemporaryDirectory() as d:
+            origin, work = self.make_clone(d)
+            self.git(work, "remote", "set-url", "origin", str(Path(d) / "missing.git"))
+            self.assertEqual(self.run_job(work), 1)  # GitHub unreachable: the feed commit stays local
+            self.git(work, "remote", "set-url", "origin", str(origin))
+            self.push_from_elsewhere(d, origin, "README.md", "alias update\n", "update aliases")
+            self.assertEqual(self.run_job(work, now=self.NEXT_NIGHT), 0)
+            self.assertEqual(self.git(origin, "log", "-2", "--format=%s", "main").splitlines(),
+                             ["feed: 2026-09-19", "update aliases"])
 
     def test_push_failure_keeps_file_and_reports(self):
         with tempfile.TemporaryDirectory() as d:
             origin, work = self.make_clone(d)
             self.git(work, "remote", "set-url", "origin", str(Path(d) / "missing.git"))
-            self.assertEqual(self.run_job(work), 1)
+            with contextlib.redirect_stdout(io.StringIO()) as log:
+                self.assertEqual(self.run_job(work), 1)
             self.assertTrue((work / "docs" / "broadcasts.json").exists())
-            self.assertIn("push failed", (work / "state" / "status.line").read_text(encoding="utf-8"))
+            self.assertIn("git push failed (exit 128)", (work / "state" / "status.line").read_text(encoding="utf-8"))
+            self.assertIn("does not appear to be a git repository", log.getvalue())  # git's own reason
             self.assertFalse((work / "state" / "last-success").exists())
 
 

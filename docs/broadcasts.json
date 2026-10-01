@@ -1,7 +1,7 @@
 {
   "version": 1,
   "region": "US",
-  "generatedAt": "2026-09-30T07:05:00Z",
+  "generatedAt": "2026-10-01T07:05:02Z",
   "matches": {
     "575341": {
       "channels": [
@@ -160,6 +160,60 @@
       "source": "espn"
     },
     "575367": {
+      "channels": [
+        "Paramount+"
+      ],
+      "source": "espn"
+    },
+    "575368": {
+      "channels": [
+        "Paramount+"
+      ],
+      "source": "espn"
+    },
+    "575369": {
+      "channels": [
+        "Paramount+"
+      ],
+      "source": "espn"
+    },
+    "575370": {
+      "channels": [
+        "Paramount+"
+      ],
+      "source": "espn"
+    },
+    "575371": {
+      "channels": [
+        "Paramount+"
+      ],
+      "source": "espn"
+    },
+    "575372": {
+      "channels": [
+        "Paramount+"
+      ],
+      "source": "espn"
+    },
+    "575373": {
+      "channels": [
+        "Paramount+"
+      ],
+      "source": "espn"
+    },
+    "575374": {
+      "channels": [
+        "Paramount+"
+      ],
+      "source": "espn"
+    },
+    "575375": {
+      "channels": [
+        "Paramount+"
+      ],
+      "source": "espn"
+    },
+    "575376": {
       "channels": [
         "Paramount+"
       ],

@@ -1,8 +1,106 @@
 {
   "version": 1,
   "region": "US",
-  "generatedAt": "2026-10-06T07:05:05Z",
+  "generatedAt": "2026-10-07T07:05:00Z",
   "matches": {
+    "560592": {
+      "channels": [
+        "Peacock"
+      ],
+      "source": "espn"
+    },
+    "560593": {
+      "channels": [
+        "USA Network",
+        "Universo"
+      ],
+      "source": "espn"
+    },
+    "560594": {
+      "channels": [
+        "Peacock"
+      ],
+      "source": "espn"
+    },
+    "560595": {
+      "channels": [
+        "Peacock"
+      ],
+      "source": "espn"
+    },
+    "560596": {
+      "channels": [
+        "USA Network",
+        "Universo"
+      ],
+      "source": "espn"
+    },
+    "560597": {
+      "channels": [
+        "USA Network"
+      ],
+      "source": "espn"
+    },
+    "560598": {
+      "channels": [
+        "NBC",
+        "Telemundo"
+      ],
+      "source": "espn"
+    },
+    "560599": {
+      "channels": [
+        "Peacock"
+      ],
+      "source": "espn"
+    },
+    "560600": {
+      "channels": [
+        "NBC",
+        "Telemundo"
+      ],
+      "source": "espn"
+    },
+    "560601": {
+      "channels": [
+        "USA Network",
+        "Universo"
+      ],
+      "source": "espn"
+    },
+    "560602": {
+      "channels": [
+        "Peacock"
+      ],
+      "source": "espn"
+    },
+    "560603": {
+      "channels": [
+        "USA Network",
+        "Universo"
+      ],
+      "source": "espn"
+    },
+    "560607": {
+      "channels": [
+        "NBC",
+        "Universo"
+      ],
+      "source": "espn"
+    },
+    "560610": {
+      "channels": [
+        "USA Network",
+        "Universo"
+      ],
+      "source": "espn"
+    },
+    "560611": {
+      "channels": [
+        "Peacock"
+      ],
+      "source": "espn"
+    },
     "575341": {
       "channels": [
         "Paramount+"

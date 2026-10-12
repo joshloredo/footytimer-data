@@ -1,31 +1,11 @@
 {
   "version": 1,
   "region": "US",
-  "generatedAt": "2026-10-11T07:05:03Z",
+  "generatedAt": "2026-10-12T07:05:05Z",
   "matches": {
-    "560594": {
-      "channels": [
-        "Peacock"
-      ],
-      "source": "espn"
-    },
-    "560596": {
-      "channels": [
-        "USA Network",
-        "Universo"
-      ],
-      "source": "espn"
-    },
     "560597": {
       "channels": [
         "USA Network"
-      ],
-      "source": "espn"
-    },
-    "560598": {
-      "channels": [
-        "NBC",
-        "Telemundo"
       ],
       "source": "espn"
     },

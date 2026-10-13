@@ -1,14 +1,8 @@
 {
   "version": 1,
   "region": "US",
-  "generatedAt": "2026-10-12T07:05:05Z",
+  "generatedAt": "2026-10-13T07:05:05Z",
   "matches": {
-    "560597": {
-      "channels": [
-        "USA Network"
-      ],
-      "source": "espn"
-    },
     "560602": {
       "channels": [
         "Peacock"

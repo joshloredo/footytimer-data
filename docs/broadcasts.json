@@ -1,7 +1,7 @@
 {
   "version": 1,
   "region": "US",
-  "generatedAt": "2026-10-13T07:05:05Z",
+  "generatedAt": "2026-10-14T07:05:06Z",
   "matches": {
     "560602": {
       "channels": [
@@ -16,10 +16,42 @@
       ],
       "source": "espn"
     },
+    "560604": {
+      "channels": [
+        "Peacock"
+      ],
+      "source": "espn"
+    },
+    "560605": {
+      "channels": [
+        "USA Network",
+        "Telemundo"
+      ],
+      "source": "espn"
+    },
+    "560606": {
+      "channels": [
+        "USA Network",
+        "Universo"
+      ],
+      "source": "espn"
+    },
     "560607": {
       "channels": [
         "NBC",
         "Universo"
+      ],
+      "source": "espn"
+    },
+    "560608": {
+      "channels": [
+        "Peacock"
+      ],
+      "source": "espn"
+    },
+    "560609": {
+      "channels": [
+        "Peacock"
       ],
       "source": "espn"
     },
@@ -36,60 +68,6 @@
       ],
       "source": "espn"
     },
-    "575341": {
-      "channels": [
-        "Paramount+"
-      ],
-      "source": "espn"
-    },
-    "575342": {
-      "channels": [
-        "Paramount+"
-      ],
-      "source": "espn"
-    },
-    "575343": {
-      "channels": [
-        "Paramount+"
-      ],
-      "source": "espn"
-    },
-    "575344": {
-      "channels": [
-        "Paramount+"
-      ],
-      "source": "espn"
-    },
-    "575345": {
-      "channels": [
-        "Paramount+"
-      ],
-      "source": "espn"
-    },
-    "575346": {
-      "channels": [
-        "Paramount+"
-      ],
-      "source": "espn"
-    },
-    "575347": {
-      "channels": [
-        "Paramount+"
-      ],
-      "source": "espn"
-    },
-    "575348": {
-      "channels": [
-        "Paramount+"
-      ],
-      "source": "espn"
-    },
-    "575349": {
-      "channels": [
-        "Paramount+"
-      ],
-      "source": "espn"
-    },
     "575350": {
       "channels": [
         "Paramount+"
@@ -98,6 +76,7 @@
     },
     "575351": {
       "channels": [
+        "CBS Sports Network",
         "Paramount+"
       ],
       "source": "espn"
@@ -116,6 +95,7 @@
     },
     "575354": {
       "channels": [
+        "CBS Sports Network",
         "Paramount+"
       ],
       "source": "espn"
@@ -247,6 +227,60 @@
       "source": "espn"
     },
     "575376": {
+      "channels": [
+        "Paramount+"
+      ],
+      "source": "espn"
+    },
+    "575377": {
+      "channels": [
+        "Paramount+"
+      ],
+      "source": "espn"
+    },
+    "575378": {
+      "channels": [
+        "Paramount+"
+      ],
+      "source": "espn"
+    },
+    "575379": {
+      "channels": [
+        "Paramount+"
+      ],
+      "source": "espn"
+    },
+    "575380": {
+      "channels": [
+        "Paramount+"
+      ],
+      "source": "espn"
+    },
+    "575381": {
+      "channels": [
+        "Paramount+"
+      ],
+      "source": "espn"
+    },
+    "575382": {
+      "channels": [
+        "Paramount+"
+      ],
+      "source": "espn"
+    },
+    "575383": {
+      "channels": [
+        "Paramount+"
+      ],
+      "source": "espn"
+    },
+    "575384": {
+      "channels": [
+        "Paramount+"
+      ],
+      "source": "espn"
+    },
+    "575385": {
       "channels": [
         "Paramount+"
       ],

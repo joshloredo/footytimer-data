@@ -1,21 +1,8 @@
 {
   "version": 1,
   "region": "US",
-  "generatedAt": "2026-10-17T07:05:04Z",
+  "generatedAt": "2026-10-18T07:05:02Z",
   "matches": {
-    "560602": {
-      "channels": [
-        "Peacock"
-      ],
-      "source": "espn"
-    },
-    "560603": {
-      "channels": [
-        "USA Network",
-        "Universo"
-      ],
-      "source": "espn"
-    },
     "560604": {
       "channels": [
         "Peacock"
@@ -36,13 +23,6 @@
       ],
       "source": "espn"
     },
-    "560607": {
-      "channels": [
-        "NBC",
-        "Universo"
-      ],
-      "source": "espn"
-    },
     "560608": {
       "channels": [
         "Peacock"
@@ -50,19 +30,6 @@
       "source": "espn"
     },
     "560609": {
-      "channels": [
-        "Peacock"
-      ],
-      "source": "espn"
-    },
-    "560610": {
-      "channels": [
-        "USA Network",
-        "Universo"
-      ],
-      "source": "espn"
-    },
-    "560611": {
       "channels": [
         "Peacock"
       ],
@@ -106,6 +73,7 @@
     },
     "575365": {
       "channels": [
+        "CBS Sports Network",
         "Paramount+"
       ],
       "source": "espn"
@@ -142,6 +110,7 @@
     },
     "575371": {
       "channels": [
+        "CBS Sports Network",
         "Paramount+"
       ],
       "source": "espn"

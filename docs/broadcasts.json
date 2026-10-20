@@ -1,15 +1,8 @@
 {
   "version": 1,
   "region": "US",
-  "generatedAt": "2026-10-19T07:05:03Z",
+  "generatedAt": "2026-10-20T07:05:02Z",
   "matches": {
-    "560606": {
-      "channels": [
-        "USA Network",
-        "Universo"
-      ],
-      "source": "espn"
-    },
     "575359": {
       "channels": [
         "Paramount+"

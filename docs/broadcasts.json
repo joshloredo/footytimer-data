@@ -1,7 +1,7 @@
 {
   "version": 1,
   "region": "US",
-  "generatedAt": "2026-10-24T07:05:05Z",
+  "generatedAt": "2026-10-25T07:05:02Z",
   "matches": {
     "560612": {
       "channels": [
@@ -16,38 +16,8 @@
       ],
       "source": "espn"
     },
-    "560614": {
-      "channels": [
-        "USA Network",
-        "Universo"
-      ],
-      "source": "espn"
-    },
     "560615": {
       "channels": [
-        "Peacock"
-      ],
-      "source": "espn"
-    },
-    "560616": {
-      "channels": [
-        "USA Network",
-        "Telemundo",
-        "Universo"
-      ],
-      "source": "espn"
-    },
-    "560617": {
-      "channels": [
-        "NBCSN",
-        "Telemundo",
-        "Peacock"
-      ],
-      "source": "espn"
-    },
-    "560618": {
-      "channels": [
-        "NBCSN",
         "Peacock"
       ],
       "source": "espn"

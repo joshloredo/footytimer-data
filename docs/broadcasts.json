@@ -1,39 +1,8 @@
 {
   "version": 1,
   "region": "US",
-  "generatedAt": "2026-10-25T07:05:02Z",
+  "generatedAt": "2026-10-26T07:05:05Z",
   "matches": {
-    "560612": {
-      "channels": [
-        "Peacock"
-      ],
-      "source": "espn"
-    },
-    "560613": {
-      "channels": [
-        "USA Network",
-        "Telemundo"
-      ],
-      "source": "espn"
-    },
-    "560615": {
-      "channels": [
-        "Peacock"
-      ],
-      "source": "espn"
-    },
-    "560619": {
-      "channels": [
-        "Peacock"
-      ],
-      "source": "espn"
-    },
-    "560621": {
-      "channels": [
-        "USA Network"
-      ],
-      "source": "espn"
-    },
     "575377": {
       "channels": [
         "Paramount+"

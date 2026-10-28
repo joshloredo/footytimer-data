@@ -1,8 +1,73 @@
 {
   "version": 1,
   "region": "US",
-  "generatedAt": "2026-10-27T07:05:05Z",
+  "generatedAt": "2026-10-28T07:05:04Z",
   "matches": {
+    "560622": {
+      "channels": [
+        "USA Network",
+        "Universo"
+      ],
+      "source": "espn"
+    },
+    "560623": {
+      "channels": [
+        "Peacock"
+      ],
+      "source": "espn"
+    },
+    "560624": {
+      "channels": [
+        "Peacock"
+      ],
+      "source": "espn"
+    },
+    "560625": {
+      "channels": [
+        "Peacock"
+      ],
+      "source": "espn"
+    },
+    "560626": {
+      "channels": [
+        "USA Network",
+        "Telemundo"
+      ],
+      "source": "espn"
+    },
+    "560627": {
+      "channels": [
+        "NBC",
+        "Universo"
+      ],
+      "source": "espn"
+    },
+    "560628": {
+      "channels": [
+        "Peacock"
+      ],
+      "source": "espn"
+    },
+    "560629": {
+      "channels": [
+        "Peacock"
+      ],
+      "source": "espn"
+    },
+    "560630": {
+      "channels": [
+        "USA Network",
+        "Universo"
+      ],
+      "source": "espn"
+    },
+    "560631": {
+      "channels": [
+        "Peacock",
+        "Telemundo"
+      ],
+      "source": "espn"
+    },
     "575377": {
       "channels": [
         "Paramount+"

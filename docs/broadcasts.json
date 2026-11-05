@@ -1,7 +1,7 @@
 {
   "version": 1,
   "region": "US",
-  "generatedAt": "2026-11-04T08:05:03Z",
+  "generatedAt": "2026-11-05T08:05:01Z",
   "matches": {
     "560632": {
       "channels": [
@@ -70,61 +70,6 @@
       ],
       "source": "espn"
     },
-    "575386": {
-      "channels": [
-        "Paramount+"
-      ],
-      "source": "espn"
-    },
-    "575387": {
-      "channels": [
-        "Paramount+"
-      ],
-      "source": "espn"
-    },
-    "575388": {
-      "channels": [
-        "Paramount+"
-      ],
-      "source": "espn"
-    },
-    "575389": {
-      "channels": [
-        "Paramount+"
-      ],
-      "source": "espn"
-    },
-    "575390": {
-      "channels": [
-        "Paramount+"
-      ],
-      "source": "espn"
-    },
-    "575391": {
-      "channels": [
-        "Paramount+"
-      ],
-      "source": "espn"
-    },
-    "575392": {
-      "channels": [
-        "CBS Sports Network",
-        "Paramount+"
-      ],
-      "source": "espn"
-    },
-    "575393": {
-      "channels": [
-        "Paramount+"
-      ],
-      "source": "espn"
-    },
-    "575394": {
-      "channels": [
-        "Paramount+"
-      ],
-      "source": "espn"
-    },
     "575395": {
       "channels": [
         "Paramount+"
@@ -174,6 +119,60 @@
       "source": "espn"
     },
     "575403": {
+      "channels": [
+        "Paramount+"
+      ],
+      "source": "espn"
+    },
+    "575404": {
+      "channels": [
+        "Paramount+"
+      ],
+      "source": "espn"
+    },
+    "575405": {
+      "channels": [
+        "Paramount+"
+      ],
+      "source": "espn"
+    },
+    "575406": {
+      "channels": [
+        "Paramount+"
+      ],
+      "source": "espn"
+    },
+    "575407": {
+      "channels": [
+        "Paramount+"
+      ],
+      "source": "espn"
+    },
+    "575408": {
+      "channels": [
+        "Paramount+"
+      ],
+      "source": "espn"
+    },
+    "575409": {
+      "channels": [
+        "Paramount+"
+      ],
+      "source": "espn"
+    },
+    "575410": {
+      "channels": [
+        "Paramount+"
+      ],
+      "source": "espn"
+    },
+    "575411": {
+      "channels": [
+        "Paramount+"
+      ],
+      "source": "espn"
+    },
+    "575412": {
       "channels": [
         "Paramount+"
       ],
